@@ -22,7 +22,7 @@ test.only("Browser Context Playwright Test", async ({ browser }) => {
     console.log(await cardBodyHeader.nth(0).textContent());
     console.log(await cardBodyHeader.first().textContent());
 
-
+//sample    
 });
 
 //Option 2 to kickstart automation in Playwright
