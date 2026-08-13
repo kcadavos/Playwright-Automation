@@ -1,13 +1,13 @@
 const { test, expect } = require("@playwright/test"); //import playwright
 
 // Option 1 to kickstart automation in Playwright
-test.only("Browser Context Playwright Test", async ({ browser }) => {
+test("Browser Context Playwright Test", async ({ browser }) => {
   const context = await browser.newContext();
   const page = await context.newPage();
   await page.goto("https://rahulshettyacademy.com/loginpagepractise/");
   //css locator
   const userName = page.locator("#username")
-  const passWord = page.locator("#password");
+  const passWord = page.locator("#password"); // locating by id
   await userName.fill("rahulshettyacademy");
   await passWord.fill("learning");
   await page.locator("#signInBtn").click();
@@ -18,9 +18,10 @@ test.only("Browser Context Playwright Test", async ({ browser }) => {
   await passWord.fill("Learning@830$3mK2")
   await page.locator("#signInBtn").click();
   
-  const cardBodyHeader = page.locator(".card-body a")
-    console.log(await cardBodyHeader.nth(0).textContent());
-    console.log(await cardBodyHeader.first().textContent());
+  const cardTitles = page.locator(".card-body a") //locating by class
+  console.log(await cardTitles.first().textContent()); // first title
+    console.log(await cardTitles.nth(1).textContent()); // second title - starts with nth(0)
+    console.log (await cardTitles.allTextContents()); // grabs all the titles 
 
 //sample    
 });
