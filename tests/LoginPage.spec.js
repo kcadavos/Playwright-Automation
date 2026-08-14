@@ -67,6 +67,6 @@ const context = await browser.newContext();
   //navigate back to the previous page
   const usernameField = page.locator("#username");
   await usernameField.fill(domainText);
-  console.log("from old page: "await usernameField.inputValue());
+  console.log("from old page: " + await usernameField.inputValue());
 
 })
