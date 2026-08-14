@@ -1,53 +1,23 @@
 const {test,expect} = require("@playwright/test");
 
 
-test.only("Register", async ({page})=> {
+test("Login", async ({page})=> {
 
     await page.goto("https://rahulshettyacademy.com/client/");
-    const registerBtn = page.locator ('.login-wrapper-footer-text'); //locate through class
-    await registerBtn.click();
-    
-    const pageTitle = page.locator('.login-title');
-    await expect(pageTitle).toContainText("Register");
-    
-    const firstName = page.locator('#firstName');
-    await firstName.fill('Karen');
-    
-    const LastName =page.locator('#lastName');
-    await LastName.fill('Smith');
+    const email = page.locator ('#userEmail');
+    await email.fill('ksmith@gmail.com');
 
-    const userEmail = page.locator('#userEmail');
-    await userEmail.fill('ksmith1@gmail.com');
+    const password = page.locator ('#userPassword');
+    await password.fill ('12345Pass');
 
-    const userMobile = page.locator('#userMobile');
-    await userMobile.fill('1234567890')
-
-    const occupation = page.locator('[formcontrolname="occupation"]');
-    await occupation.selectOption({ label: 'Student' });
-
-    const genderMale = page.locator('input[value="Male"]');
-    await genderMale.check();
-
-    const userPassword = page.locator('#userPassword');
-    await userPassword.fill('12345Pass')
-
-    const confirmPassword = page.locator('#confirmPassword');
-    await confirmPassword.fill('12345Pass');
-
-    const chkboxRequired = page.locator('[formcontrolname="required"]');
-    await chkboxRequired.check();
-
-    const loginBtn = page.locator('#login');
+    const loginBtn = page.locator ('#login');
     await loginBtn.click();
 
-    const createdSuccessfully =page.locator('.headcolor')
-    await expect(createdSuccessfully).toContainText("Account Created Successfully");
+    // await page.waitForLoadState('networkidle'); // synchronization step wait for returning arrays i.e allTextcontents (sometimes flaky) 
 
-
-
-
-
-
+    const allCardBodyTitles = page.locator('.card-body b');  // parent child locator
+    await allCardBodyTitles.first().waitFor(); // another sync step for all textContents returning an array
+    console.log (await allCardBodyTitles.allTextContents()); 
 
 
 
