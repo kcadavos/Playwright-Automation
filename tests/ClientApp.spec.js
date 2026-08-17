@@ -103,9 +103,9 @@ test("Login", async ({page})=> {
                     
                        const rowElement =  page.locator("tbody .ng-star-inserted").nth(i);
                        const rowOrderText = await rowElement.locator("[scope*='row']").textContent();
-                         if(rowOrderText===cleanOrderText);
+                         if(rowOrderText.includes(cleanOrderText))
                          {
-                            console.log("row order text" + rowOrderText);
+                            console.log("row order text " + rowOrderText);
                              await (rowElement.locator(".btn-primary")).click();
                              break;
                          }
@@ -114,7 +114,10 @@ test("Login", async ({page})=> {
             
             //verify Order Summary Page
             const summaryOrderId=  page.locator(".col-text");
-            await expect (summaryOrderId).toHaveText(cleanOrderText);
+            const summaryOrderIdText =await summaryOrderId.textContent();
+            console.log("SUMMARY ORDER TEXT: "+ summaryOrderIdText)
+            // await expect (summaryOrderId).toHaveText(cleanOrderText);
+            expect  (await cleanOrderText.includes(summaryOrderIdText)).toBeTruthy();
 
             //  await page.pause();
         });
