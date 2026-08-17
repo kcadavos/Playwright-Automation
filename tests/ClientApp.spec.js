@@ -22,7 +22,7 @@ test("Login", async ({page})=> {
 
     });
 
-    test.only("Add Items to Cart", async ({page})=> {
+    test("Add Items to Cart", async ({page})=> {
 
         await page.goto("https://rahulshettyacademy.com/client/");
         const email = page.locator ('#userEmail');
