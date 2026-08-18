@@ -40,7 +40,7 @@ test("Login with radiobutton select",async ({page})=>{
     // await page.pause(); //opens the playwright inspector
 });
 
-test.only ('@Child window test',async({browser})=>{
+test('@Child window test',async({browser})=>{
 const context = await browser.newContext();
   const page = await context.newPage();
   await page.goto("https://rahulshettyacademy.com/loginpagepractise/");

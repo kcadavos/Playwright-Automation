@@ -25,7 +25,9 @@ const config= ({
     headless: false,
     actionTimeout: 10 *1000, //10secs timeout for all actions
     navigationTimeout: 30*1000, // when hiting a new page
-
+    screenshot:'on', // enable screenshots
+    trace:'retain-on-failure' //logging information
+    //retain on failure only creates screenshots and logs for failure 
  },
 
 });

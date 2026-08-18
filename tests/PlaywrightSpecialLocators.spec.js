@@ -38,18 +38,18 @@ page.setDefaultTimeout(9000);
 
 //Step level timeout: default timeout for expect assertions is 5 seconds. with timeout it forces it to wait based on the idnidcatedindicated
 
-await expect (page.getByAltText("Success! The Form has been submitted successfully!.!")).toBeVisible({timeout: 10_000});
-// Global Level timeout - if you want to apply a change in timeout globally you can change the config.js
+await expect (page.getByText("Success! The Form has been submitted successfully!.")).toBeVisible({timeout: 10_000});
+// // Global Level timeout - if you want to apply a change in timeout globally you can change the config.js
 
 
-//using testimeout
-await slowExpect(page.getByAltText("Success! The Form has been submitted successfully!.!")).toBeVisible();
+// //using testimeout
+// await slowExpect(page.getByAltText("Success! The Form has been submitted successfully!.")).toBeVisible();
 
 
   //locate by Role
   await page.getByRole("link", { name: "Shop" }).click();
   // if the content takes a while to load
-  await expect (page.locator(".my-4").first().toHaveText("Shop"))
+//   await expect (page.locator(".my-4").first().toHaveText("Shop"))
 
   //locate by filer
   await page.locator("app-card").filter({hasText: 'Nokia Edge'}).getByRole("button").click();

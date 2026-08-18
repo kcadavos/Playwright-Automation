@@ -6,7 +6,7 @@ test("Login", async ({ page }) => {
   const emailValue = "ksmith@gmail.com";
   await email.fill(emailValue);
 
-  const password = page.getByPlaceholder("enter your password");
+  const password = page.getByPlaceholder("enter your passsword");
   await password.fill("12345Pass");
 
   const loginBtn = page.getByRole("button", { name: "Login" });
