@@ -13,7 +13,7 @@ test ("Book Event", async ({page})=>{
      await sigInBtn.click();
 
     
-     const eventCardSection = page.locator("#event-card").filter({hasText:'Dilli Diwali Mela'}).getByText("Book Now")
+     const eventCardSection = page.locator("#event-card").filter({hasText:'World Tech Summit'}).getByText("Book Now")
      await eventCardSection.click();
 
      // Booking page
@@ -39,12 +39,17 @@ test ("Book Event", async ({page})=>{
     await expect (page.getByText("Booking Confirmed! 🎉")).toBeVisible();
 
     //navigate to events page
-    const eventsLink = page.locator("nav-events");
+    const eventsLink = page.locator("#nav-events");
     await eventsLink.click();
 
-    // const eventCardSeatsText = page.locator("#event-card").filter({hasText:'World Tech Summit'}).getByText("seats left");
-    // await console.log("EVENT SEAT TEXT:"+ eventCardSeatsText);
+    const eventCardSeatsText = page.locator("#event-card").filter({hasText:'World Tech Summit'}).getByText("seats left").innerText();
+    const eventCardSeatsTextCnt = parseInt(eventCardSeatsText);
+    await console.log("EVENT SEAT TEXT:"+ eventCardSeatsTextCnt);
 
+    const expectedCurrentAvailSeat = await currentAvailSeatCount -1;
+    await console.log("CURRENT AVAIL SEAT -1 :"+ expectedCurrentAvailSeat);
+
+    await expect(expectedCurrentAvailSeat === eventCardSeatsTextCnt).toBeTruthy();
     //  await page.pause()
 
     
