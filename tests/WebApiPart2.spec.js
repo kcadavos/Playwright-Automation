@@ -1,6 +1,8 @@
 const {test,expect} = require('@playwright/test');
 let webContext;
 
+
+// saving context to state.json file
 test.beforeAll(async({browser})=>{
     const context = await browser.newContext();
     const page = await context.newPage();
