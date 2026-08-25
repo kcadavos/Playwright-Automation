@@ -67,3 +67,30 @@ const SIX_EVENTS_RESPONSE = {
     await page.pause();
 
   })
+
+  test ("Banner Not Visible Test", async({page})=>{
+    await page.route("**/api/events*",
+       async route=>{
+
+        console.log ("INTERCEPTION!!", route.request().url());
+        await route.fulfill(
+            {
+                status:200,
+                contentType:"application/json",
+                body: JSON.stringify(FOUR_EVENTS_RESPONSE)
+            }
+        );
+       }
+    )
+    await LoginAndGoToEvents(page);
+
+    const eventCards = page.getByTestId('event-card');
+    await expect (eventCards.first()).toBeVisible();
+    expect(await eventCards.count()).toBe(4);
+
+
+    const banner = page.getByText(/sandbox holds up to/i);
+    await expect (banner).toBeHidden();
+    await page.pause();
+
+  })
