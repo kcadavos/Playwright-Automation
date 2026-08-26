@@ -29,3 +29,17 @@ await framesPage.locator("li a[href*='lifetime-access']:visible").click();
  console.log("SUB COUNT:"+ textCheck.split(" ")[1]);
 
 })
+
+test ("Sample test with screenshot and visual comparison", async ({page})=>{
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+   await expect(page.locator("#displayed-text")).toBeVisible();
+
+   // take screenshot only with locator
+   await page.locator("#displayed-text").screenshot({path:'tests/screenshots/partialscreenshot1.png'})
+   await page.locator("#hide-textbox").click();
+
+   // take screenshot
+   await page.screenshot({path:'tests/screenshots/screenshotfullscreen1.png'})
+
+   await expect(page.locator("#displayed-text")).toBeHidden();
+})
