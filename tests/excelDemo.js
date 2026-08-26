@@ -1,11 +1,11 @@
 const ExcelJs= require('exceljs');
 
-async function excelTest()
+async function updateExcelTest(searchText, replaceText, filepath)
 {
 
     const workbook = new ExcelJs.Workbook();
     
-    await  workbook.xlsx.readFile("/Users/karen/Desktop/Learning/Playwright Automation/download.xlsx");
+    await  workbook.xlsx.readFile(filepath);
     
     
     const worksheet1 = workbook.getWorksheet('Sheet1');
@@ -19,11 +19,11 @@ async function excelTest()
      worksheet1.eachRow((row, rowNumber)=>{
         row.eachCell((cell,colNumber)=>{
             // console.log("ROW:"+ rowNumber + " COL:" + colNumber + " VAL: "+ cell.value)
-            if (cell.value ==="Apple")
+            if (cell.value ===searchText)
                 {
                     // console.log("ROW#: "+rowNumber);
                     // console.log("COL#: "+ colNumber);
-                    
+
                     //update the locator if the text is matched
                     output.row = rowNumber;
                     output.column = colNumber;
@@ -34,11 +34,15 @@ async function excelTest()
     
    //read and write cell
     const cell = worksheet1.getCell(output.row,output.column);
-    cell.value = "Iphone";
-    await workbook.xlsx.writeFile("/Users/karen/Desktop/Learning/Playwright Automation/download.xlsx");
+    cell.value = replaceText;
+    await workbook.xlsx.writeFile(filepath);
 
 
 }
 
+updateExcelTest("Papaya", "Atis", "/Users/karen/Desktop/Learning/Playwright Automation/download.xlsx")
 
-excelTest();
+test("Upload download excel validation", ({})=>{
+
+})
+
