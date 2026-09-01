@@ -1,15 +1,19 @@
 const {test,expect} = require("@playwright/test");
 
-const {LoginPage} = require("../pageobjects/LoginPage.js")
+const {LoginPage} = require("../pageobjects/LoginPage.js");
+const { DashboardPage } = require("../pageobjects/DashboardPage.js");
 
-test.only("Login", async ({page})=> {
+test("Login", async ({page})=> {
 
     const userName = "ksmith@gmail.com";
     const password="12345Pass"
+    const productName= "ZARA COAT 3";
 
     const loginPage = new LoginPage(page);
-    loginPage.goTo();
-    loginPage.validLogin(userName,password);
+    await loginPage.goTo();
+    await loginPage.validLogin(userName,password);
+
+
 
     await page.waitForLoadState('networkidle'); // synchronization step wait for returning arrays i.e allTextcontents (sometimes flaky) 
 
@@ -19,44 +23,28 @@ test.only("Login", async ({page})=> {
 
     });
 
-    test("Add Items to Cart", async ({page})=> {
+    test.only("Add Items to Cart", async ({page})=> {
     
-        await page.goto("https://rahulshettyacademy.com/client/");
-        const email = page.locator ('#userEmail');
-        const emailValue = 'ksmith@gmail.com';
-        await email.fill(emailValue);
+        const userName = "ksmith@gmail.com";
+        const password="12345Pass"
+        const productName= "ZARA COAT 3";
     
-        const password = page.locator ('#userPassword');
-        await password.fill ('12345Pass');
-    
-        const loginBtn = page.locator ('#login');
-        await loginBtn.click();
-    
-        await page.waitForLoadState('networkidle'); // synchronization step wait for returning arrays i.e allTextcontents (sometimes flaky) 
-    
-        const allCardBodyTitles = page.locator('.card-body b');  // parent child locator
-        await allCardBodyTitles.first().waitFor(); 
-        console.log (await allCardBodyTitles.allTextContents()); 
+        const loginPage = new LoginPage(page);
+        await loginPage.goTo();
+        await loginPage.validLogin(userName,password);
 
-        const products = page.locator(".card-body");
-        const productCnt = await products.count();
-        const productName = "ZARA COAT 3";
+        
+        const dashboardPage = new DashboardPage(page);
+        await dashboardPage.searchProduct(productName);
+        await dashboardPage.navigateToCart(page);
 
-        for (let i=0; i<productCnt; ++i)
-            {
-                if (await products.nth(i).locator("b").textContent() === productName)
-                    {
-                        await products.nth(i).locator("text= Add to Cart").click(); // search by text
-                        break; //exit the for loop once item is found
-                    }
-            }
-
-
-            //Cart Page
-            await page.locator("[routerlink*='cart']").click();
-            await page.locator("div li").first().waitFor();
-            const bool = page.locator("h3:has-text('ZARA COAT 4')").isVisible();
-            expect (bool).toBeTruthy();
+        console.log("URL:", await page.url());
+        console.log("TITLE:", await page.title());
+        
+        // await page.locator("div li").first().waitFor();
+        await page.locator(".itemNumber").waitFor();
+        const bool = await page.getByText('ZARA COAT 3').isVisible();
+        expect (bool).toBeTruthy();
 
             await page.locator("text=Checkout").click();
 
@@ -80,7 +68,7 @@ test.only("Login", async ({page})=> {
 
             //check values in the payment  page
             console.log(await page.locator(".user__name [type='text']").first().textContent() );
-            expect(page.locator(".user__name [type='text']").first()).toHaveText(emailValue);
+            await expect( page.locator(".user__name [type='text']").first()).toHaveText(userName);
             
             await page.locator(".action__submit").click();
 
@@ -110,11 +98,15 @@ test.only("Login", async ({page})=> {
                     }
             
             //verify Order Summary Page
-            const summaryOrderId=  page.locator(".col-text");
-            const summaryOrderIdText =await summaryOrderId.textContent();
-            console.log("SUMMARY ORDER TEXT: "+ summaryOrderIdText)
-            // await expect (summaryOrderId).toHaveText(cleanOrderText);
-            expect  (await cleanOrderText.includes(summaryOrderIdText)).toBeTruthy();
 
-            //  await page.pause();
+        await page.waitForLoadState('networkidle');
+        // await page.pause();
+        //     const summaryOrderId= await page.locator(".col-text");
+        //     const summaryOrderIdText =await summaryOrderId.textContent();
+        //     console.log("SUMMARY ORDER TEXT: "+ summaryOrderIdText)
+        //     // await expect (summaryOrderId).toHaveText(cleanOrderText);
+        //     expect  (await cleanOrderText.includes(summaryOrderIdText)).toBeTruthy();
+        const orderRow = await page.locator("th").filter({ hasText: cleanOrderText });
+            
+        await expect(orderRow).toBeVisible();
         });
