@@ -2,6 +2,8 @@ const {test,expect} = require("@playwright/test");
 
 const {LoginPage} = require("../pageobjects/LoginPage.js");
 const { DashboardPage } = require("../pageobjects/DashboardPage.js");
+const { CartPage } = require("../pageobjects/CartPage.js");
+const { PaymentPage } = require("../pageobjects/PaymentPage.js");
 
 test("Login", async ({page})=> {
 
@@ -41,36 +43,22 @@ test("Login", async ({page})=> {
         console.log("URL:", await page.url());
         console.log("TITLE:", await page.title());
         
-        // await page.locator("div li").first().waitFor();
-        await page.locator(".itemNumber").waitFor();
-        const bool = await page.getByText('ZARA COAT 3').isVisible();
-        expect (bool).toBeTruthy();
+       
 
-            await page.locator("text=Checkout").click();
+        //Cart Page
+        const cartPage = new CartPage(page);
+        const isProductVisible = await cartPage.checkCart(productName);
+        expect (isProductVisible).toBeTruthy();
+        await cartPage.clickCheckOut();
 
-            await page.locator("[placeholder*='Country']").pressSequentially("ind",{delay:150}); // do not use fill and this types it slowly 
-            const dropdown = page.locator(".ta-results"); 
-            await dropdown.waitFor();
-            const optionsCount = await dropdown.locator("button").count();
-
-            for (let i =0; i<optionsCount; ++i)
-                { 
-                    const text = await dropdown.locator("button").nth(i).textContent();
-                    console.log ("TEXT:"+text);
-                    if (text===" India")
-                    {
-
-                        await dropdown.locator("button").nth(i).click();
-                        break;
-                    }
-
-                }
-
-            //check values in the payment  page
-            console.log(await page.locator(".user__name [type='text']").first().textContent() );
-            await expect( page.locator(".user__name [type='text']").first()).toHaveText(userName);
+        //PaymentPage                        
+        const countryName = "India"
+        const paymentPage = new PaymentPage(page);
+        await paymentPage.enterPaymentDetails(countryName);
+        //check values in the payment  page
+        // await expect( page.locator(".user__name [type='text']").first()).toHaveText(userName);
+        await paymentPage.clickSubmit();
             
-            await page.locator(".action__submit").click();
 
             //confirmation page
             await expect(page.locator(".hero-primary")).toHaveText(" Thankyou for the order. ");
@@ -106,7 +94,11 @@ test("Login", async ({page})=> {
         //     console.log("SUMMARY ORDER TEXT: "+ summaryOrderIdText)
         //     // await expect (summaryOrderId).toHaveText(cleanOrderText);
         //     expect  (await cleanOrderText.includes(summaryOrderIdText)).toBeTruthy();
-        const orderRow = await page.locator("th").filter({ hasText: cleanOrderText });
-            
+
+        // await page.pause();    
+        console.log("CLEAN ORDER TEXT:"+cleanOrderText);
+        const orderRow = await page.getByText(cleanOrderText.trim(), { exact: true });
+
+        // console.log("ORDER ROW:"+ orderRow);
         await expect(orderRow).toBeVisible();
         });

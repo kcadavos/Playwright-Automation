@@ -10,8 +10,8 @@ class DashboardPage{
     async searchProduct(productName)
     {
         await this.page.waitForLoadState('networkidle');
-       const titles  = await this.productsText.allTextContents(); 
-      await  console.log("TITLES: "+ titles);
+        const titles  = await this.productsText.allTextContents(); 
+        await  console.log("TITLES: "+ titles);
 
         const productCnt = await this.products.count();
 
