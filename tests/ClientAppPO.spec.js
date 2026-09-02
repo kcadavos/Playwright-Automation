@@ -69,9 +69,6 @@ test("Login", async ({page})=> {
         const ordersPage = new OrdersPage(page);
         await ordersPage.goThroughOrders(cleanOrderText);
 
-     
-
-        console.log("CLEAN ORDER TEXT:"+cleanOrderText);
         const orderRow = await page.getByText(cleanOrderText, { exact: true });
 
         // console.log("ORDER ROW:"+ orderRow);
