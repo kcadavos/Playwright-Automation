@@ -1,6 +1,6 @@
 const {test, expect, request} = require("@playwright/test");
 
-const {customtest} = require("./utils/fixtures.js")
+const {customtest} = require("../utils/fixtures.js")
 
 customtest("Fixtures Test", async({authenticatedPage,createOrder,testDataForOrder})=>{
    await  authenticatedPage.goto("https://rahulshettyacademy.com/client/");

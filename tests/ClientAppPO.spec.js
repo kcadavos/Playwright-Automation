@@ -6,7 +6,7 @@ const { CartPage } = require("../pageobjects/CartPage.js");
 const { PaymentPage } = require("../pageobjects/PaymentPage.js");
 const { ConfirmationPage } = require("../pageobjects/ConfirmationPage.js");
 const { OrdersPage } = require("../pageobjects/OrdersPage.js");
-const dataset = JSON.parse(JSON.stringify(require("./utils/testdata/placeOrderTestData.json")));
+const dataset = JSON.parse(JSON.stringify(require("../utils/testdata/placeOrderTestData.json")));
 
 test("Login", async ({page})=> {
 
