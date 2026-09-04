@@ -6,16 +6,17 @@ const { CartPage } = require("../pageobjects/CartPage.js");
 const { PaymentPage } = require("../pageobjects/PaymentPage.js");
 const { ConfirmationPage } = require("../pageobjects/ConfirmationPage.js");
 const { OrdersPage } = require("../pageobjects/OrdersPage.js");
+const dataset = JSON.parse(JSON.stringify(require("./utils/testdata/placeOrderTestData.json")));
 
 test("Login", async ({page})=> {
 
-    const userName = "ksmith@gmail.com";
-    const password="12345Pass"
-    const productName= "ZARA COAT 3";
+    // const userName = "ksmith@gmail.com";
+    // const password="12345Pass"
+    // const productName= "ZARA COAT 3";
 
     const loginPage = new LoginPage(page);
     await loginPage.goTo();
-    await loginPage.validLogin(userName,password);
+    await loginPage.validLogin(dataset.userName,dataset.password);
 
 
 
@@ -29,17 +30,17 @@ test("Login", async ({page})=> {
 
     test.only("Add Items to Cart", async ({page})=> {
     
-        const userName = "ksmith@gmail.com";
-        const password="12345Pass"
-        const productName= "ZARA COAT 3";
+        // const userName = "ksmith@gmail.com";
+        // const password="12345Pass"
+        // const productName= "ZARA COAT 3";
     
         const loginPage = new LoginPage(page);
         await loginPage.goTo();
-        await loginPage.validLogin(userName,password);
+        await loginPage.validLogin(dataset.userName,dataset.password);
 
         
         const dashboardPage = new DashboardPage(page);
-        await dashboardPage.searchProduct(productName);
+        await dashboardPage.searchProduct(dataset.productName);
         await dashboardPage.navigateToCart(page);
 
         console.log("URL:", await page.url());
@@ -49,14 +50,14 @@ test("Login", async ({page})=> {
 
         //Cart Page
         const cartPage = new CartPage(page);
-        const isProductVisible = await cartPage.checkCart(productName);
+        const isProductVisible = await cartPage.checkCart(dataset.productName);
         expect (isProductVisible).toBeTruthy();
         await cartPage.clickCheckOut();
 
         //PaymentPage                        
-        const countryName = "India"
+        // const countryName = "India"
         const paymentPage = new PaymentPage(page);
-        await paymentPage.enterPaymentDetails(countryName);
+        await paymentPage.enterPaymentDetails(dataset.countryName);
         await paymentPage.clickSubmit();
             
         //confirmation page
