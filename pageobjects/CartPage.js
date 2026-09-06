@@ -6,7 +6,6 @@ class CartPage{
     }
     async checkCart(productName)
     {
-       await  this.page.pause();
           await this.page.locator(".itemNumber").waitFor();
           return await this.page.getByText(productName).isVisible();
           
