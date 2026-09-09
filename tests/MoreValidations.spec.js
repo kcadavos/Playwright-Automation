@@ -1,5 +1,8 @@
 const {test,expect} = require('@playwright/test');
 
+
+test.describe.configure({mode:'parallel'}); // allows parallel execution in 1 test case
+
 test ("Other validations",async ({page})=>{
  await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
 

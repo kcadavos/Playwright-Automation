@@ -32,7 +32,7 @@ const dataset = JSON.parse(JSON.stringify(require("../utils/testdata/placeOrderT
 
 for (const data of dataset)
 {
-test(`Add Items to Cart for ${data.productName}`, async ({page})=> {
+test(`@smoke Add Items to Cart for ${data.productName}`, async ({page})=> {
 
     
         const loginPage = new LoginPage(page);
@@ -79,7 +79,7 @@ test(`Add Items to Cart for ${data.productName}`, async ({page})=> {
 }
 
 
-customtest.only(`Add Items to Cart Using Custom Test `, async ({page,testDataForOrder})=> {
+customtest(`@web @smoke Add Items to Cart Using Custom Test `, async ({page,testDataForOrder})=> {
 
     
     const loginPage = new LoginPage(page);
