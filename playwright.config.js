@@ -21,7 +21,7 @@ const config= ({
   },
    reporter: 'html',
    use:{
-    browserName : 'webkit' ,
+    browserName : 'chrome' ,
     headless: false,
     actionTimeout: 10 *1000, //10secs timeout for all actions
     navigationTimeout: 30*1000, // when hiting a new page
