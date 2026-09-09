@@ -1,0 +1,8 @@
+TITLES: ADIDAS ORIGINAL,ZARA COAT 3,iphone 13 pro
+ENTERED NAVIGATE TO CART
+URL: https://rahulshettyacademy.com/client/#/dashboard/cart
+TITLE: Let's Shop
+TEXT:British Indian Ocean Territory
+TEXT:India
+CNT 4
+row order text 6aa0c552e7cd69710fcb26bd

@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","15417","@smoke Add Items to Cart for ZARA COAT 3","","2026-09-08","passed","2026-09-08","","ClientAppPO.spec.js","",""
+"","13270","@smoke Add Items to Cart for ADIDAS ORIGINAL","","2026-09-08","passed","2026-09-08","","ClientAppPO.spec.js","",""
+"","15073","@web @smoke Add Items to Cart Using Custom Test","","2026-09-08","passed","2026-09-08","","ClientAppPO.spec.js","",""
