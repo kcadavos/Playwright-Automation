@@ -1,0 +1,8 @@
+[ 'ADIDAS ORIGINAL', 'ZARA COAT 3', 'iphone 13 pro' ]
+TEXT: British Indian Ocean Territory
+TEXT: India
+ksmith@gmail.com
+ORDER ID: 6aa0d1ade7cd69710fcb38b7
+CNT 4
+row order text 6aa0d1ade7cd69710fcb38b7
+SUMMARY ORDER TEXT: 6aa0d1ade7cd69710fcb38b7

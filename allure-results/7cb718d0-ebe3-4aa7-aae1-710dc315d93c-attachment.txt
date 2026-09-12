@@ -1,0 +1,2 @@
+INTERCEPTION!! https://api.eventhub.rahulshettyacademy.com/api/events?limit=6
+INTERCEPTION!! https://api.eventhub.rahulshettyacademy.com/api/events?page=1&limit=12

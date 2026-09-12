@@ -15,6 +15,7 @@ import { defineConfig, devices } from '@playwright/test';
 const config= ({
   testDir: './tests', //directory where tests are located
   retries:2,
+  workers:5,
   timeout: 40 *1000, //overide the existing 30sec timeout  for components and not expect timeout | test level timeout 
   expect: {
     timeout: 40 *1000 //timeout for assertion
