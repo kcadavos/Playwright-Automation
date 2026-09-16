@@ -1,12 +1,13 @@
 const {test,expect} = require("@playwright/test");
 const {customtest} = require('../utils/test-base');
 
-const {LoginPage} = require("../pageobjects/LoginPage.js");
-const { DashboardPage } = require("../pageobjects/DashboardPage.js");
-const { CartPage } = require("../pageobjects/CartPage.js");
-const {PaymentPage} =require ('../pageobjects/PaymentPage.js');
-const { ConfirmationPage } = require("../pageobjects/ConfirmationPage.js");
-const { OrdersPage } = require("../pageobjects/OrdersPage.js");
+// import {LoginPage} from '../pageobjects_ts/LoginPage.ts';
+// import { DashboardPage } from '../pageobjects_ts/DashboardPage.ts';
+// import { CartPage } from '../pageobjects_ts/CartPage.ts';
+// import {PaymentPage} from '../pageobjects_ts/PaymentPage.ts'
+// import { ConfirmationPage } from '../pageobjects_ts/ConfirmationPage.ts';
+// import {OrdersPage} from '../pageobjects_ts/OrdersPage.ts'
+import {POManager} from '../pageobjects_ts/POManager.ts'
 const dataset = JSON.parse(JSON.stringify(require("../utils/testdata/placeOrderTestData.json")));
 
 
@@ -34,13 +35,13 @@ for (const data of dataset)
 {
 test(`@smoke Add Items to Cart for ${data.productName}`, async ({page})=> {
 
-    
-        const loginPage = new LoginPage(page);
+        const poManager = new POManager(page);
+        const loginPage = poManager.getLoginPage();
         await loginPage.goTo();
         await loginPage.validLogin(data.userName,data.password);
 
         
-        const dashboardPage = new DashboardPage(page);
+        const dashboardPage = poManager.getDashboardPage();
         await dashboardPage.searchProduct(data.productName);
         await dashboardPage.navigateToCart(page);
 
@@ -50,24 +51,24 @@ test(`@smoke Add Items to Cart for ${data.productName}`, async ({page})=> {
        
 
         //Cart Page
-        const cartPage = new CartPage(page);
+        const cartPage = poManager.getCartPage();
         const isProductVisible = await cartPage.checkCart(data.productName);
         expect (isProductVisible).toBeTruthy();
         await cartPage.clickCheckOut();
 
         //PaymentPage                  
-        const paymentPage = new PaymentPage(page);
+        const paymentPage = poManager.getPaymentPage();
         await paymentPage.enterPaymentDetails(data.countryName);
         await paymentPage.clickSubmit();
             
         //confirmation page
-        const confirmationPage = new ConfirmationPage(page);
+        const confirmationPage = poManager.getConfirmationPage();
         await expect(confirmationPage.thankYouText).toHaveText(" Thankyou for the order. ");
         const cleanOrderText = await confirmationPage.getOrderNumberDisplayed();
         await confirmationPage.navigateToOrders();
 
         //ORDERS PAGE
-        const ordersPage = new OrdersPage(page);
+        const ordersPage = poManager.getOrdersPage();
         await ordersPage.goThroughOrders(cleanOrderText);
 
         const orderRow = await page.getByText(cleanOrderText, { exact: true });
@@ -81,13 +82,13 @@ test(`@smoke Add Items to Cart for ${data.productName}`, async ({page})=> {
 
 customtest(`@web @smoke Add Items to Cart Using Custom Test `, async ({page,testDataForOrder})=> {
 
-    
-    const loginPage = new LoginPage(page);
+    const poManager = new POManager(page);
+    const loginPage = poManager.getLoginPage();
     await loginPage.goTo();
     await loginPage.validLogin(testDataForOrder.userName,testDataForOrder.password);
 
     
-    const dashboardPage = new DashboardPage(page);
+    const dashboardPage = poManager.getDashboardPage();
     await dashboardPage.searchProduct(testDataForOrder.productName);
     await dashboardPage.navigateToCart(page);
 
@@ -97,24 +98,24 @@ customtest(`@web @smoke Add Items to Cart Using Custom Test `, async ({page,test
    
 
     //Cart Page
-    const cartPage = new CartPage(page);
+    const cartPage = poManager.getCartPage();
     const isProductVisible = await cartPage.checkCart(testDataForOrder.productName);
     expect (isProductVisible).toBeTruthy();
     await cartPage.clickCheckOut();
 
     //PaymentPage                  
-    const paymentPage = new PaymentPage(page);
+    const paymentPage = poManager.getPaymentPage();
     await paymentPage.enterPaymentDetails(testDataForOrder.countryName);
     await paymentPage.clickSubmit();
         
     //confirmation page
-    const confirmationPage = new ConfirmationPage(page);
+    const confirmationPage = poManager.getConfirmationPage();
     await expect(confirmationPage.thankYouText).toHaveText(" Thankyou for the order. ");
     const cleanOrderText = await confirmationPage.getOrderNumberDisplayed();
     await confirmationPage.navigateToOrders();
 
     //ORDERS PAGE
-    const ordersPage = new OrdersPage(page);
+    const ordersPage = poManager.getOrdersPage();
     await ordersPage.goThroughOrders(cleanOrderText);
 
     const orderRow = await page.getByText(cleanOrderText, { exact: true });
