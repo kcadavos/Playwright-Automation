@@ -1,12 +1,5 @@
 const {test,expect} = require("@playwright/test");
-const {customtest} = require('../utils/test-base');
-
-// import {LoginPage} from '../pageobjects_ts/LoginPage.ts';
-// import { DashboardPage } from '../pageobjects_ts/DashboardPage.ts';
-// import { CartPage } from '../pageobjects_ts/CartPage.ts';
-// import {PaymentPage} from '../pageobjects_ts/PaymentPage.ts'
-// import { ConfirmationPage } from '../pageobjects_ts/ConfirmationPage.ts';
-// import {OrdersPage} from '../pageobjects_ts/OrdersPage.ts'
+import {customtest} from '../utils/test-base.ts'
 import {POManager} from '../pageobjects_ts/POManager.ts'
 const dataset = JSON.parse(JSON.stringify(require("../utils/testdata/placeOrderTestData.json")));
 
