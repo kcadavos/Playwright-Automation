@@ -7,10 +7,6 @@ Given(
   "a login to Ecommerce application with {string} and {string}",
   {timeout: 100 * 1000},
   async function (username, password) {
-    const browser = await playwright.chromium.launch();
-    const context = await browser.newContext();
-    this.page = await context.newPage();
-    this.poManager = new POManager(this.page);
     const loginPage = this.poManager.getLoginPage();
     await loginPage.goTo();
     await loginPage.validLogin(username, password);
@@ -48,3 +44,21 @@ Then("Verify order is place in OrderHistory", async function () {
   const orderRow = await this.page.getByText(this.cleanOrderText, { exact: true });
   await expect(orderRow).toBeVisible();
 });
+
+
+
+Given('a login to Ecommerce2 application with {string} and {string}',async function (username, password) {
+    await this.page.goto("https://rahulshettyacademy.com/loginpagepractise/");
+  const userName = this.page.locator("#username")
+  const passWord = this.page.locator("#password"); // locating by id
+  await userName.fill(username);
+  await passWord.fill(password);
+  await this.page.locator("#signInBtn").click();
+  });
+
+Then('Verify Error Message is displayed',{timeout: 100*1000}, async function () {
+  console.log("ERROR MSG: " + await this.page.locator("[style*='block']").textContent());
+  await expect (this.page.locator("[style*='block']")).toContainText("Incorrect username/password")
+  
+  });
+  
