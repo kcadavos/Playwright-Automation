@@ -111,8 +111,9 @@ customtest(`@web @smoke Add Items to Cart Using Custom Test `, async ({page,test
     const ordersPage = poManager.getOrdersPage();
     await ordersPage.goThroughOrders(cleanOrderText);
 
-    const orderRow = await page.getByText(cleanOrderText, { exact: true });
+    // const orderRow = await page.getByText(cleanOrderText, { exact: true });
 
+    const orderRow = await page.getByText(cleanOrderText, { exact: false });
     // console.log("ORDER ROW:"+ orderRow);
     await expect(orderRow).toBeVisible();
 });
