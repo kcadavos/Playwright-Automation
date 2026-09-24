@@ -103,7 +103,7 @@ customtest(`@web @smoke Add Items to Cart Using Custom Test `, async ({page,test
         
     //confirmation page
     const confirmationPage = poManager.getConfirmationPage();
-    await expect(confirmationPage.thankYouText).toHaveText(" Thankyou for the order. ERROR ");
+    await expect(confirmationPage.thankYouText).toHaveText(" Thankyou for the order. ");
     const cleanOrderText = await confirmationPage.getOrderNumberDisplayed();
     await confirmationPage.navigateToOrders();
 
