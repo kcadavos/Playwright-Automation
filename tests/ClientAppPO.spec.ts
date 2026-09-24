@@ -103,7 +103,7 @@ customtest(`@web @smoke Add Items to Cart Using Custom Test `, async ({page,test
         
     //confirmation page
     const confirmationPage = poManager.getConfirmationPage();
-    await expect(confirmationPage.thankYouText).toHaveText(" Thankyou for the order. ");
+    await expect(confirmationPage.thankYouText).toHaveText(" Thankyou for the order. ERROR ");
     const cleanOrderText = await confirmationPage.getOrderNumberDisplayed();
     await confirmationPage.navigateToOrders();
 
@@ -111,9 +111,9 @@ customtest(`@web @smoke Add Items to Cart Using Custom Test `, async ({page,test
     const ordersPage = poManager.getOrdersPage();
     await ordersPage.goThroughOrders(cleanOrderText);
 
-    // const orderRow = await page.getByText(cleanOrderText, { exact: true });
+    const orderRow = await page.getByText(cleanOrderText, { exact: true });
 
-    const orderRow = await page.getByText(cleanOrderText, { exact: false });
+    // const orderRow = await page.getByText(cleanOrderText, { exact: false });
     // console.log("ORDER ROW:"+ orderRow);
     await expect(orderRow).toBeVisible();
 });
